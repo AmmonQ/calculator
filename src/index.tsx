@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom/client';
 import { create, all } from 'mathjs';
+import './index.css';
 
-class App extends React.Component {
+type CalculatorState = {
+  calculation: string;
+}
 
-  state = {
-    calculation: ""
-  };
+class App extends React.Component<{}, CalculatorState> {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      calculation: ""
+    }
+  }
 
   calculate = () => {
     const config = {};
@@ -38,9 +47,9 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <h1>Calculator</h1>
-        <div className="buttonsRow">
-          <input type="text" value={this.state.calculation}></input>
+        <h1 id="title">React Calculator</h1>
+        <div className="result-row">
+          <p className="result">Result: {this.state.calculation}</p>
         </div>
         <div className="buttonsRow">
           <button className="numberButton" onClick={() => this.addToCalculation('7')}>7</button>
@@ -61,16 +70,20 @@ class App extends React.Component {
           <button className="operatorButton" id="subtract" onClick={() => this.addToCalculation('-')}>-</button>
         </div>
         <div className="buttonsRow">
-          <button className="numberButton" onClick={() => this.addToCalculation('0')}>0</button>
-          <button className="operatorButton" id="add" onClick={() => this.addToCalculation('+')}>+</button>
-          <button className="submit" id="submit" onClick={() => this.calculate()}>Submit</button>
-          <button className='backspace' id='backspace' onClick={() => this.backspace()}>Backspace</button>
-          <button className='clear' id='clear' onClick={() => this.clear()}>Clear</button>
+          <button id="zeroButton" className="numberButton" onClick={() => this.addToCalculation('0')}>0</button>
+          <button className="numberButton" onClick={() => this.addToCalculation('.')}>.</button>
+          <button className="operatorButton" id="addButton" onClick={() => this.addToCalculation('+')}>+</button>
+        </div>
+        <div className="buttonsRow">
+          <button className="operatorButton" id="submit" onClick={() => this.calculate()}>Submit</button>
+          <button className='operatorButton' id='backspace' onClick={() => this.backspace()}>Backspace</button>
+          <button className='operatorButton' id='clear' onClick={() => this.clear()}>Clear</button>
         </div>
       </div>
     );
   }
 }
 
+document.title = "React Calculator";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
